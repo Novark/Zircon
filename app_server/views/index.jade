@@ -1,5 +1,19 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+	.text-center
+		h1= title
+	.container-fluid
+		.row.button-row
+			.col-md-12.text-center
+				.button-container.btn.btn-large
+					.home-button
+						a(href="/results")
+							span.glyphicon.glyphicon-list-alt.offset-fix
+				.button-container.btn.btn-large
+					.home-button
+						a(href="/analytics")
+							span.glyphicon.glyphicon-cog
+		.row.description-row
+			.col-md-12.description-text.text-center This is a description for the hovered item
+

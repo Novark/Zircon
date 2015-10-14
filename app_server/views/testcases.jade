@@ -1,0 +1,54 @@
+extends layout
+
+block content
+	center
+		h1= title
+		br
+		br
+		br
+		br
+		table
+			tr
+				th.datetime	Date / Time
+				th.subsystem Subsystem
+				th.testplan	Test Plan
+				th.testcase	Test Case
+				th.passcount Pass
+				th.failcount Fail
+				th.skipcount Skip
+				th.errorcount Crash
+			tr
+				td 09-28-2015 17:19:00
+				td
+					a(href="/results/testcases/1") Objects
+				td TP25 - Trend Log
+				td TC25.01 - Polling
+				td 10
+				td 0
+				td 0
+				td 0
+			tr
+				td 09-28-2015 17:19:00
+				td Objects
+				td TP25 - Trend Log
+				td TC25.02 - COV
+				td 5
+				td 5
+				td 0
+				td 0
+			tr
+				td 09-28-2015 17:19:00
+				td Objects
+				td TP25 - Trend Log
+				td TC25.03 - Triggering
+				td 5
+				td 0
+				td 0
+				td 0
+
+		br
+		br
+		a(href="/") Back
+
+
+

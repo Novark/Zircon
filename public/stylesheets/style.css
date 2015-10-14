@@ -1,0 +1,149 @@
+@import "http://fonts.googleapis.com/css?family=Roboto:400,300";
+
+body {
+    background-color: #252830;
+    color: #FFFFFF;
+    font-family: Roboto, sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+h1 {
+    margin-top: 32px !important;
+}
+
+a {
+	outline: 0;
+    color: #9FD2EA;
+}
+
+a:hover {
+	color: #FFFFFF;
+}
+
+/* Table Styles */
+
+tr {
+	border-bottom: 1px solid #CFD2DA;
+}
+
+th {
+	border-bottom: 2px solid #CFD2DA;
+    font-size: 18px;
+}
+
+td {
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.tablecontainer {
+	color: #FF0000;
+}
+
+.datetime {
+	width: 200px;
+}
+
+.user {
+	width: 100px;
+}
+
+.source {
+	width: 150px;
+}
+
+.name {
+	width: 350px;
+}
+
+.subsystem {
+	width: 150px;
+}
+
+.testplan {
+	width: 200px;
+}
+
+.testcase {
+	width: 200px;
+}
+
+.passcount {
+	color: #00CC44;
+	width: 80px;
+}
+
+.failcount {
+	color: #EE4444;
+	width: 80px;
+}
+
+.skipcount {
+	color: #EE8822;
+	width: 80px;
+}
+
+.crashcount {
+	color: #4444EE;
+	width: 80px;
+}
+
+/* Home Page */
+
+.button-row {
+	margin-top: 32px;
+}
+
+.description-row {
+	font-size: 24px;
+	margin-top: 64px;
+}
+
+.description-text {
+	color: #FFFFFF;
+}
+
+.button-container {
+	padding: 0px !important;
+	margin-left: 16px;
+	margin-right: 16px;
+	float: none;
+	border: 2px solid #FFFFFF;
+}
+
+.home-button:hover {
+    box-shadow: 0px 0px 10px #0077EE;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.home-button span {
+	font-size: 128px;
+	display: block;
+	text-align: center;
+	width: 200px;
+	height: 200px;
+	min-height: 200px;
+	line-height: 200px;
+}
+
+.home-button a {
+	outline: 0;
+	color: #CFD2DA;
+	text-decoration: none;
+}
+
+.home-button a:hover {
+	color: #FFFFFF;
+}
+
+/* CSS fixes */
+
+.offset-fix {
+    padding-right: 10px;
+}
+
+
+
+
