@@ -3,7 +3,7 @@ extends layout
 block content
 	center
 		h1= title
-		h2= "This is the results page!"
+		h2= "Here's a list of test runs!"
 		br
 		br
 		table
@@ -16,34 +16,17 @@ block content
 				th.failcount Fail
 				th.skipcount Skip
 				th.crashcount Crash
-			tr
-				td 09-28-2015 17:19:00
-				td jpriest
-				td 192.168.50.1
-				td
-					a(href="/results/testruns/12345") Test Run 1 - Objects
-				td 50
-				td 50
-				td 1
-				td 0
-			tr
-				td 09-28-2015 17:19:00
-				td jpriest
-				td 192.168.50.1
-				td Test Run 2 - Event Management
-				td 100
-				td 0
-				td 1
-				td 0
-			tr
-				td 09-28-2015 17:19:00
-				td jpriest
-				td 192.168.50.1
-				td Test Run 3 - Data Exchange
-				td 0
-				td 100
-				td 1
-				td 0
+			each testrun in testrunList
+				tr
+					td= testrun.datetime
+					td= testrun.user
+					td= testrun.source
+					td
+						a(href="/api/testruns/" + testrun._id)= testrun.name
+					td= testrun.pass
+					td= testrun.fail
+					td= testrun.skip
+					td= testrun.crash
 		br
 		br
 		a(href="/") Back
