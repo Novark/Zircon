@@ -3,12 +3,11 @@ extends layout
 block content
 	center
 		h1= title
-		h2= "Here's a list of test runs!"
-		br
-		br
+		a(href="../") Back
 		table
 			tr
 				th.datetime Date / Time
+				th.project Project
 				th.user User
 				th.source Source
 				th.name Test Run
@@ -16,25 +15,25 @@ block content
 				th.failcount Fail
 				th.skipcount Skip
 				th.crashcount Crash
+				th.elapsedtime Duration
 			each testrun in testrunList
-				tr
-					td= testrun.datetime
+				- var dateTime = moment(testrun.datetime)
+				- var elapsedTime = moment.duration(testrun.elapsed, "seconds")
+				tr.datarow(data-href = "/results/testruns/" + testrun._id)
+					td= dateTime.format("MMM D, YYYY - hh:mm:ss A")
+					td= testrun.project
 					td= testrun.user
 					td= testrun.source
-					td
-						a(href="/api/testruns/" + testrun._id)= testrun.name
+					td= testrun.name
 					td= testrun.pass
 					td= testrun.fail
 					td= testrun.skip
 					td= testrun.crash
-		br
-		br
-		a(href="/") Back
-
-
-
-
-
-
-
+					if elapsedTime.get("hours") > 0
+						td= elapsedTime.get("hours") + "h " + elapsedTime.get("minutes") + "m " + elapsedTime.get("seconds") + "s"
+					else if elapsedTime.get("minutes") > 0
+						td= elapsedTime.get("minutes") + "m " + elapsedTime.get("seconds") + "s"
+					else
+						td= elapsedTime.get("seconds") + "s"
+		.error= message
 

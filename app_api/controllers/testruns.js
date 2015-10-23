@@ -12,16 +12,16 @@ var sendJSONResponse = function(res, status, content) {
 
 /* GET test runs list */
 module.exports.testrunsList = function(req, res) {
+    console.log("ROUTE: testrunsList");
     currentDate = new Date();
-    oneMonthAgo = currentDate.setMonth(currentDate.getMonth() - 2);
-    console.log(oneMonthAgo);
+    oneMonthAgo = currentDate.setMonth(currentDate.getMonth() - 1);
     trModel.find({
         "datetime": {"$gte": oneMonthAgo}
     }).sort({"datetime": "desc"}).exec(
         function(err, testruns) {
             if (!testruns) {
                 sendJSONResponse(res, 404, {
-                    "message": "no testruns found"
+                    "message": "test run not found"
                 });
                 return;
             } else if (err) {
@@ -35,12 +35,13 @@ module.exports.testrunsList = function(req, res) {
 
 /* GET test run */
 module.exports.testrunRead = function(req, res) {
+    console.log("ROUTE: testrunRead");
     if (req.params && req.params.testrunID) {
         trModel.findById(req.params.testrunID).exec(
             function(err, testrun) {
                 if (!testrun) {
                     sendJSONResponse(res, 404, {
-                        "message": "testrun not found"
+                        "message": "test run not found"
                     });
                     return;
                 } else if (err) {
@@ -59,8 +60,10 @@ module.exports.testrunRead = function(req, res) {
 
 /* POST test run */
 module.exports.testrunCreate = function(req, res) {
+    console.log("ROUTE: testrunCreate");
     trModel.create({
         "datetime": req.body.datetime,
+        "project": req.body.project,
         "user": req.body.user,
         "source": req.body.source,
         "name": req.body.name,
@@ -79,11 +82,31 @@ module.exports.testrunCreate = function(req, res) {
 
 /* PUT test run */
 module.exports.testrunUpdate = function(req, res) {
-    console.log("TRPUT");
+    console.log("ROUTE: testrunUpdate");
+    testrunID = req.params.testrunID;
+    if (testrunID) {
+        trModel.findById(testrunID).exec(
+            function(err, testrun) {
+                testrun.pass = req.body.pass;
+                testrun.fail = req.body.fail;
+                testrun.skip = req.body.skip;
+                testrun.crash = req.body.crash;
+                testrun.elapsed = req.body.elapsed;
+                testrun.save(function(err, testrun) {
+                    if (err) {
+                        sendJSONResponse(res, 404, err);
+                    } else {
+                        sendJSONResponse(res, 200, testrun);
+                    }
+                });
+            }
+        );
+    }
 };
 
 /* DELETE test run */
 module.exports.testrunDelete = function(req, res) {
+    console.log("ROUTE: testrunDelete");
     testrunID = req.params.testrunID;
     if (testrunID) {
         trModel.findByIdAndRemove(testrunID).exec(
@@ -97,8 +120,10 @@ module.exports.testrunDelete = function(req, res) {
         );
     } else {
         sendJSONResponse(res, 404, {
-            "message": "no testrun"
+            "message": "no testrun parameter was provided in the request"
         });
     }
 };
+
+
 

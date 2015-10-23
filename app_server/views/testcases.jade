@@ -3,10 +3,7 @@ extends layout
 block content
 	center
 		h1= title
-		br
-		br
-		br
-		br
+		a(href="../") Back
 		table
 			tr
 				th.datetime	Date / Time
@@ -16,39 +13,25 @@ block content
 				th.passcount Pass
 				th.failcount Fail
 				th.skipcount Skip
-				th.errorcount Crash
-			tr
-				td 09-28-2015 17:19:00
-				td
-					a(href="/results/testcases/1") Objects
-				td TP25 - Trend Log
-				td TC25.01 - Polling
-				td 10
-				td 0
-				td 0
-				td 0
-			tr
-				td 09-28-2015 17:19:00
-				td Objects
-				td TP25 - Trend Log
-				td TC25.02 - COV
-				td 5
-				td 5
-				td 0
-				td 0
-			tr
-				td 09-28-2015 17:19:00
-				td Objects
-				td TP25 - Trend Log
-				td TC25.03 - Triggering
-				td 5
-				td 0
-				td 0
-				td 0
-
-		br
-		br
-		a(href="/") Back
-
-
+				th.crashcount Crash
+				th.elapsedtime Duration
+			each testcase in testcaseList
+				- var dateTime = moment(testcase.datetime)
+				- var elapsedTime = moment.duration(testcase.elapsed, "seconds")
+				tr.datarow(data-href = "/results/testcases/" + testcase._id)
+					td= dateTime.format("MMM D, YYYY - hh:mm:ss A")
+					td= testcase.subsystem
+					td= testcase.testplan
+					td= testcase.testcase
+					td= testcase.pass
+					td= testcase.fail
+					td= testcase.skip
+					td= testcase.crash
+					if elapsedTime.get("hours") > 0
+						td= elapsedTime.get("hours") + "h " + elapsedTime.get("minutes") + "m " + elapsedTime.get("seconds") + "s"
+					else if elapsedTime.get("minutes") > 0
+						td= elapsedTime.get("minutes") + "m " + elapsedTime.get("seconds") + "s"
+					else
+						td= elapsedTime.get("seconds") + "s"
+		.error= message
 

@@ -1,14 +1,14 @@
 /**
- * Created by Jeff on 10/8/2015.
+ * Created by Jeff on 10/8/2015
  */
 
 var mongoose = require("mongoose");
-var dbURI = "mongodb://192.168.153.142:27017/zircon";
+//var dbURI = "mongodb://192.168.153.142:27017/zircon";
+var dbURI = "mongodb://127.0.0.1:27017/zircon";
 var gracefulShutdown;
 
 if (process.env.NODE_ENV === "production") {
-	dbURI = ""; //Handle production DB URI
-	console.log("TODO: Need to handle production DB URI in db.js");
+	dbURI = "mongodb://10.2.2.117:27017/zircon"; //Handle production DB URI
 }
 
 mongoose.connect(dbURI);
@@ -49,6 +49,7 @@ process.once("SIGINT", function() {
 
 //NOTE: may also need a Windows kill signal, depending on deployment
 
-//Require the testruns model
+//Require the API models
 require("./testruns");
-
+require("./testcases");
+require("./tags");

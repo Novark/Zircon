@@ -3,11 +3,136 @@ extends layout
 block content
 	center
 		h1= title
-		h2= "Test results will be here"
+		a(href="../") Back
+		.error= message
+	br
 
-		br
-		br
-		a(href="/") Back
+	//- The row offset counter is used to keep the alternating row colouring consistent for skipped tags
+	- var rowOffset = 0
+	each tag, i in tagList
+		//- Define variables
+		- var dateTime = moment(tag.datetime)
+		- var rowID = (i + rowOffset) % 2
+		- var rowLabel
+
+		//- Set the row label for alternating styles
+		if rowID == 0
+			- rowLabel = "even"
+		else
+			- rowLabel = "odd"
+
+		case tag.tagtype
+			when "endrunnable"
+				.tag-grid(id=tag.tagtype).disable
+					.tag-row(id=rowLabel)
+						.col1.endrunnable
+
+			when "startadvancedattribute"
+				.tag-grid(id=tag.tagtype).enable
+					.tag-row(id=rowLabel)
+						.col1= dateTime.format("MMM D, YYYY - hh:mm:ss A")
+						.col2.startadvancedattribute: b= "Advanced Attribute - " + tag.tagdata.name
+						.col3.colSpacer.startadvancedattribute
+						.col4.colSpacer.startadvancedattribute
+						.col5.colSpacer.startadvancedattribute
+
+			when "endadvancedattribute"
+				- rowOffset += 1
+				.tag-grid(id=tag.tagtype).disable
+					.tag-row(id=rowLabel)
+						.col1.endadvancedattribute
+
+			default
+				.tag-grid(id=tag.tagtype).enable
+					//- Add a new tag row
+					.tag-row(id=rowLabel)
+						//- Remove the datetime cell for certain tags
+						if tag.tagtype != "endrunnable"
+							.col1= dateTime.format("MMM D, YYYY - hh:mm:ss A")
+						else
+							.col1.endrunnable
+
+						//- Add the row entries
+						case tag.tagtype
+							when "startrunnable"
+								.col2.startrunnable: b= tag.tagdata.name + " - " + tag.tagdata.description
+								.col3.colSpacer.startrunnable
+								.col4.colSpacer.startrunnable
+								.col5.colSpacer.startrunnable
+							when "endrunnable"
+								.col2.endrunnable
+							when "info"
+								if tag.tagdata.result == ""
+									.col2= tag.tagdata.text
+								else
+									.col2= tag.tagdata.text
+								.col3.colSpacer.info
+								.col4.colSpacer.info
+								.col5: b= tag.tagdata.result
+							when "verify"
+								.col2= tag.tagdata.description
+								.col3= tag.tagdata.expected
+								.col4= tag.tagdata.actual
+								if tag.tagdata.pass == 1
+									.col5.pass: b= "Passed"
+								else
+									.col5.fail: b= "Failed"
+							when "step"
+								.col2.step= "Step " + tag.tagdata.count + " - " + tag.tagdata.text
+								.col3.colSpacer.step
+								.col4.colSpacer.step
+								.col5.colSpacer.step
+							when "skip"
+								.col2.skip= "Skipping - " + tag.tagdata.text
+								.col3.colSpacer.skip
+								.col4.colSpacer.skip
+								.col5.colSpacer.skip
+							when "todo"
+								.col2.todo= "TODO - " + tag.tagdata.text
+								.col3.colSpacer.todo
+								.col4.colSpacer.todo
+								.col5.colSpacer.todo
+							when "assert"
+								.col2= tag.tagdata.description
+								.col3= tag.tagdata.expected
+								.col4= tag.tagdata.actual
+								if tag.tagdata.assertpass == 1
+									.col5: b= "OK"
+								else
+									.col5.asserterror: b= "Error"
+							when "warning"
+								.col2.warning= "Warning - " + tag.tagdata.text
+								.col3.colSpacer.warning
+								.col4.colSpacer.warning
+								.col5.colSpacer.warning
+							when "notice"
+								.col2.notice= "Notice - " + tag.tagdata.text
+								.col3.colSpacer.notice
+								.col4.colSpacer.notice
+								.col5.colSpacer.notice
+							when "error"
+								.col2.error= "Error - " + tag.tagdata.text
+								.col3.colSpacer.error
+								.col4.colSpacer.error
+								.col5.colSpacer.error
+							when "result"
+								.col2= tag.tagdata.description
+								.col3= tag.tagdata.expected
+								.col4= tag.tagdata.actual
+								if tag.tagdata.pass == 1
+									.col5.pass: b= "Passed"
+								else
+									.col5.fail: b= "Failed"
+
+
+
+
+
+
+
+
+
+
 
 
 

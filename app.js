@@ -14,13 +14,15 @@ var routesAPI = require('./app_api/routes/index');
 
 var app = express();
 
+app.locals.moment = require('./public/javascripts/moment.min');
+
 //View engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'jade');
 
 //App middleware
 
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -63,4 +65,5 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
 
